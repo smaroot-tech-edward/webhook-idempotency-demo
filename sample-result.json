@@ -1,0 +1,54 @@
+{
+  "demonstration": "Smaroot fictional form-to-CRM webhook deduplication",
+  "scope": "local SQLite CRM model; no real CRM, customer system or production use",
+  "input_deliveries": [
+    {
+      "source": "website-form",
+      "submission_id": "demo-001",
+      "name": "Demo buyer A",
+      "email": "buyer-a@example.com"
+    },
+    {
+      "source": "website-form",
+      "submission_id": "demo-001",
+      "name": "Demo buyer A",
+      "email": "buyer-a@example.com"
+    },
+    {
+      "source": "website-form",
+      "submission_id": "demo-002",
+      "name": "Demo buyer B",
+      "email": "buyer-b@example.com"
+    }
+  ],
+  "naive_append_rows": 3,
+  "fixed_rows": 2,
+  "outcomes": [
+    "created",
+    "duplicate_ignored",
+    "created"
+  ],
+  "retry_after_reopen": "duplicate_ignored",
+  "conflicting_replay": "conflict_requires_review",
+  "invalid_input": "invalid",
+  "checks": {
+    "three_deliveries_create_two_leads": true,
+    "retry_after_reopen_is_ignored": true,
+    "changed_payload_not_silently_overwritten": true,
+    "incomplete_input_rejected": true
+  },
+  "crm_rows": [
+    [
+      "website-form",
+      "demo-001",
+      "Demo buyer A",
+      "buyer-a@example.com"
+    ],
+    [
+      "website-form",
+      "demo-002",
+      "Demo buyer B",
+      "buyer-b@example.com"
+    ]
+  ]
+}
